@@ -1,146 +1,161 @@
-# Project ORION
-## E-commerce delivery performance analysis | Olist dataset
+PROJECT ORION
 
-Project ORION is a reproducible Python analytics project examining delivery performance in the Brazilian Olist e-commerce dataset. It applies data-quality checks, order-grain data preparation, descriptive analysis, statistical estimation, and weekly process monitoring.
+Six Sigma & Business Analytics | DMAIC Case Study
 
-The analytical baseline and definitions below reflect the current validated project outputs. The Python pipeline rebuilds the analytical tables from the nine source CSV files. The Power BI dashboard is a planned supplementary deliverable and is not represented as completed in this repository.
+Applying Six Sigma methodology and business analytics to investigate delivery reliability, identify improvement opportunities, and design a measurable control framework.
 
-## Project findings
+Project ORION is an independent end-to-end Six Sigma and Business Analytics case study using the public Olist Brazilian e-commerce dataset.
 
-The current validated cohort contains **96,203 delivered orders** purchased from **January 1, 2017 through August 31, 2018**, with valid actual and estimated delivery timestamps.
+The project demonstrates how a structured DMAIC (Define, Measure, Analyze, Improve, Control) approach can turn operational data into a measurable business problem, a defensible performance baseline, evidence-led investigation, prioritized improvement proposals, and a proposed control plan.
 
-| Measure | Result |
-|---|---:|
-| Delivered-order cohort | 96,203 |
-| Calendar-date late orders | 6,531 |
-| Primary calendar-date late rate | **6.7888%** |
-| On-time orders | 89,672 |
-| On-time yield | **93.2112%** |
-| Wilson 95% confidence interval for late rate | 6.6315%–6.9495% |
-| Timestamp-based late rate (sensitivity only) | 8.1307% |
-| Estimated delivery timestamps at midnight | 96,203 of 96,203 |
-| Weekly Laney p′ upper signals | 9 |
-| Weekly Laney p′ lower signals | 4 |
+This is an independent portfolio study. It was not commissioned by, affiliated with, or implemented at Olist.
 
-The primary CTQ compares calendar dates. The separate timestamp-based result is a sensitivity measure and must not replace the primary baseline. Since all estimated timestamps in this cohort are at midnight, timestamp comparison classifies an additional 1,291 orders as late.
+Project at a Glance
 
-Other descriptive findings include:
-- Mean actual delivery lead time: **12.54 days**; median: **10.21 days**.
-- Mean promised lead time: **23.65 days**; median: **23.22 days**.
-- Latest scored review coverage: **95,560 orders (99.33%)**. Mean review score was 4.291 for on-time orders and 2.271 for late orders.
-- The process-stage summaries exclude negative or missing durations and report their exclusions separately.
-- Category summaries are at **item grain**, not order grain.
+Area
 
-These are historical descriptive findings. Associations and SPC signals do not establish root causes, fault, or causation.
+Application
 
-## What the project contains
+Business problem
 
-- `run_all.py` — project entry point.
-- `src/orion_pipeline.py` — data preparation, analysis, summaries, and hard validation checks.
-- `config.json` — cohort dates and delivered-order status.
-- `data/raw/` — location for the nine original source CSVs (not committed).
-- `data/processed/` — generated order- and item-grain analytical tables (not committed; reproducible).
-- `outputs/` — compact summary CSVs and the validation report (included as project evidence).
-- `docs/` — data dictionary, methodology, and Power BI rebuild guidance.
-- `tests/` — focused helper tests.
+Delivery reliability and missed customer delivery commitments
 
-## Source data
+Methodology
 
-Place these nine CSV files in `data/raw/`:
+Six Sigma DMAIC
 
-1. `olist_customers_dataset.csv`
-2. `olist_geolocation_dataset.csv`
-3. `olist_order_items_dataset.csv`
-4. `olist_order_payments_dataset.csv`
-5. `olist_order_reviews_dataset.csv`
-6. `olist_orders_dataset.csv`
-7. `olist_products_dataset.csv`
-8. `olist_sellers_dataset.csv`
-9. `product_category_name_translation.csv`
+Analytical focus
 
-The source CSVs are excluded from GitHub to keep the repository lightweight. Obtain the Olist dataset independently and follow the source's applicable terms. Do not substitute previously processed tables for the original source files.
+Operational performance, process variation, customer experience, and improvement opportunities
 
-## Reproduce the analysis (Windows PowerShell)
+Dataset
 
-From the project root:
+Public Brazilian Olist e-commerce dataset
 
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
+Tools
 
-Copy all nine source CSVs into `data\raw\`, then run:
+Python, Pandas, NumPy, SciPy, Excel, and Power BI (dashboard planned)
 
-```powershell
-.\.venv\Scripts\python.exe run_all.py
-```
+Deliverable
 
-To run the focused helper tests (optional development step), install the development requirements and run:
+Business case study, statistical analysis, improvement design, and control framework
 
-```powershell
-.\\.venv\\Scripts\\python.exe -m pip install -r requirements-dev.txt
-.\\.venv\\Scripts\\python.exe -m pytest -v
-```
+Applying the DMAIC Framework
 
-The pipeline writes:
-- `data/processed/order_fact.csv` — one row per eligible delivered order.
-- `data/processed/order_item_detail.csv` — item-level category detail.
-- Summary CSVs and `validation_report.txt` under `outputs/`.
+1. Define — Establish the business problem
 
-The compact files in `outputs/` are committed as a snapshot of the current validated run. Re-running the pipeline regenerates them. The larger processed fact tables and raw source data remain local and are excluded from Git.
+Translated the customer expectation of receiving an order by its promised date into a measurable Critical-to-Quality (CTQ).
 
-## Analytical definitions
+Developed the problem statement, project charter, scope, stakeholder considerations, and high-level process map.
 
-### Cohort
-Orders must have:
-- status `delivered`;
-- purchase timestamp from 2017-01-01 through 2018-08-31 inclusive;
-- a valid actual customer-delivery timestamp; and
-- a valid estimated-delivery timestamp.
+Defined the unit of analysis and operational measure for delivery reliability.
 
-### Primary CTQ
-An order is late when:
+2. Measure — Establish a defensible baseline
 
-```text
-actual_delivery_date > estimated_delivery_date
-```
+Assessed data quality, completeness, key integrity, duplicates, and relationships across nine source datasets.
 
-This is a calendar-date comparison. Delivery on the estimated calendar date is classified as on time, even if the actual timestamp is later than the estimated timestamp's midnight value.
+Reconciled the eligible delivered-order cohort.
 
-### Sensitivity measure
-A separate comparison uses the full timestamps:
+Defined the primary performance measure and quantified historical delivery performance.
 
-```text
-actual_delivery_timestamp > estimated_delivery_timestamp
-```
+Used statistical estimation to communicate baseline uncertainty.
 
-It is reported only as sensitivity analysis.
+3. Analyze — Investigate process performance
 
-### Data grain and interpretation
-- The main fact table has one row per eligible order. One-to-many item, payment, and review records are aggregated before joining to avoid multiplying order counts.
-- Product-category results are item-level. They must not be interpreted as order-level late rates.
-- Review results are descriptive associations, not evidence that lateness alone caused a review score.
-- Process-stage durations are observational. Negative or missing durations are excluded from duration summaries, with counts retained.
-- The seller handoff measure is an indicator for investigation, not proof of seller fault.
-- Weekly Laney p′ signals are investigation triggers, not root causes.
+Applied statistical process monitoring using a Laney p′ chart to examine weekly variation.
 
-## Repository contents and exclusions
+Investigated delivery performance across process stages, destination states, sellers, product categories, and customer reviews.
 
-The repository tracks source code, documentation, configuration, and compact analytical summaries. It intentionally excludes:
-- original raw CSV files;
-- generated large processed fact/detail CSVs;
-- the local Python virtual environment and cache files;
-- local editor settings and environment-secret files.
+Used statistical comparisons and effect measures to distinguish observed patterns from unsupported causal claims.
 
-See `.gitignore` for the exact rules.
+Identified areas requiring better operational data before root causes can be confirmed.
 
-## Limitations
+4. Improve — Develop evidence-led countermeasures
 
-The dataset does not provide complete warehouse event histories, carrier GPS/scan trails, support-contact records, intervention assignments, or finance-approved cost inputs. Therefore, this analysis does not establish root causes or responsibility, and it does not claim implemented improvements, realized savings, or ROI.
+Developed and prioritized proposed interventions based on the observed process gaps.
 
-## Documentation
+Designed illustrative pilot scenarios and sample-size calculations.
 
-- [Methodology and analytical guardrails](docs/METHODOLOGY.md)
-- [Data dictionary](docs/DATA_DICTIONARY.md)
-- [Power BI rebuild guide](docs/POWER_BI_GUIDE.md)
+Defined experimental principles, outcome measures, and operational guardrails to evaluate whether proposed changes work.
+
+5. Control — Design a sustainable monitoring framework
+
+Proposed performance indicators, monitoring triggers, escalation principles, ownership considerations, and review cadence.
+
+Designed a control approach to monitor delivery reliability and sustain improvements after a successful pilot.
+
+Distinguished proposed controls from changes actually implemented in an operating organization.
+
+Business Analytics and Six Sigma Techniques
+
+The project brings together:
+
+CTQ definition and operationalization
+
+Project charter and process mapping
+
+Data-quality assessment and cohort reconciliation
+
+Order-level data modeling and aggregation
+
+Descriptive and inferential statistics
+
+Confidence intervals and effect-size interpretation
+
+Statistical process control (SPC) using a Laney p′ chart
+
+Process-stage and customer-experience analysis
+
+Countermeasure prioritization
+
+Pilot design and sample-size estimation
+
+KPI design and control planning
+
+Project Deliverables
+
+The repository contains the analytical pipeline, supporting documentation, validation evidence, and reproducible summary outputs.
+
+The accompanying project documents provide the business-facing explanation and detailed evidence:
+
+Executive Overview — concise presentation of the business problem, key findings, DMAIC application, and recommended direction.
+
+Project Brief — project charter, phase-by-phase summary, analytical findings, improvement portfolio, and control design.
+
+Final Project Report — detailed methodology, analysis, statistical evidence, recommendations, limitations, and appendices.
+
+See the deliverables/ folder.
+
+Tools and Implementation
+
+Python: analytical pipeline and reproducible data preparation
+
+Pandas and NumPy: data manipulation and numerical analysis
+
+SciPy: statistical calculations
+
+Power BI: planned supplementary interactive dashboard
+
+The pipeline can be run from the project root after obtaining and placing the original source CSV files in data/raw/. Setup instructions and analytical definitions are provided in docs/.
+
+Evidence and Limitations
+
+The analysis uses historical observational data. Statistical associations and process-monitoring signals help identify where further investigation is warranted; they do not independently establish root causes or assign responsibility.
+
+The proposed countermeasures and control framework are recommendations, not implemented operational changes. The available dataset does not support claims of realized savings, verified ROI, or current Olist performance.
+
+Repository Structure
+
+Project-ORION/
+├── data/              # Source-data location and generated analytical data
+├── docs/              # Methodology, data dictionary, and technical guidance
+├── deliverables/      # Executive overview, project brief, and final report
+├── outputs/            # Validated analytical summaries and evidence
+├── src/                # Python analytical pipeline
+├── tests/              # Helper tests
+├── README.md
+├── config.json
+├── requirements.txt
+└── run_all.py
+
+Project ORION — Independent Six Sigma & Business Analytics Case Study
