@@ -1,1 +1,0 @@
-Place the nine original Olist source CSV files listed in the project README in this folder. The CSV files are excluded from Git commits.
