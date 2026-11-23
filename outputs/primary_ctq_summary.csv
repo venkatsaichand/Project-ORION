@@ -1,0 +1,2 @@
+cohort_orders,late_orders,on_time_orders,late_rate,on_time_yield,wilson_95_lower,wilson_95_upper,mean_delivery_lead_days,median_delivery_lead_days,mean_promised_lead_days,median_promised_lead_days
+96203,6531,89672,0.06788769580990198,0.932112304190098,0.06631530395375758,0.06949459543279747,12.538460850026429,10.209988425925927,23.648391074852903,23.215428240740742

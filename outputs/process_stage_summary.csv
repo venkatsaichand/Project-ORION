@@ -1,0 +1,5 @@
+stage,delivery_group,cohort_orders,valid_orders,mean_days,median_days,excluded_negative_or_missing
+Approval to carrier,On time,89672,88332,2.623648852770943,1.7863368055555555,1340
+Approval to carrier,Late,6531,6506,5.551715871602851,3.0651331018518517,25
+Carrier to customer,On time,89672,89653,7.991315943420331,6.9505787037037035,19
+Carrier to customer,Late,6531,6530,27.8987372525665,26.203396990740742,1

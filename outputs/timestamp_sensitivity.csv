@@ -1,0 +1,2 @@
+cohort_orders,timestamp_late_orders,timestamp_late_rate,calendar_date_late_orders,additional_timestamp_late_vs_primary,estimated_delivery_at_midnight_count,interpretation
+96203,7822,0.08130723574108915,6531,1291,96203,Sensitivity only; primary CTQ uses calendar-date comparison.
