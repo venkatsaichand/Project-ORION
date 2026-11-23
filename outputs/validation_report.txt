@@ -1,0 +1,29 @@
+PROJECT ORION — PIPELINE VALIDATION
+===================================
+Source tables loaded: 9
+Delivered-order cohort: 96,203
+Calendar-date late orders: 6,531
+Calendar-date late rate: 6.7888%
+Timestamp-late orders (sensitivity): 7,822
+Estimated timestamps at midnight: 96,203
+Weekly Laney p' upper signals: 9
+Weekly Laney p' lower signals: 4
+Late orders with calendar-date handoff indicator: 1457
+
+Checks:
+[PASS] cohort_has_unique_order_ids
+[PASS] cohort_all_delivered
+[PASS] cohort_has_actual_delivery
+[PASS] cohort_has_estimated_delivery
+[PASS] primary_late_count_matches_flag
+[PASS] timestamp_late_count_at_least_calendar_late
+[PASS] monthly_orders_reconcile
+[PASS] monthly_late_reconcile
+[PASS] category_item_records_reconcile
+[PASS] category_statuses_are_mutually_exclusive
+[PASS] stage_valid_plus_excluded_reconcile
+
+Interpretation note: this is descriptive observational analysis.
+SPC signals are investigation triggers, not root causes.
+Stage and handoff indicators do not establish responsibility or causation.
+No implementation, realized savings, or ROI is claimed.
